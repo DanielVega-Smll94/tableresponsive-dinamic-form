@@ -1,0 +1,214 @@
+<!--  -->
+<!-- <form [formGroup]="form" (ngSubmit)="onSubmit()" class="container mt-4">
+  <div *ngFor="let key of objectKeys(jsonData)" class="mb-3">
+    <div *ngIf="isObject(jsonData[key]); else normalField" class="mb-3">
+      <h3 class="mb-3">{{ key | uppercase }}</h3>
+      <div
+        *ngFor="let subKey of objectKeys(jsonData[key])"
+        class="form-group row"
+      >
+        <label class="col-sm-2 col-form-label"
+          >{{ subKey | uppercase }}:
+        </label>
+        <div class="col-sm-10">
+          <input
+            pInputText
+            class="form-control"
+            [formControlName]="key + '.' + subKey"
+            [ngClass]="{ 'is-invalid': isControlInvalid(key + '.' + subKey) }"
+          />
+          <div
+            *ngIf="isControlInvalid(key + '.' + subKey)"
+            class="invalid-feedback"
+          >
+            {{ subKey | uppercase }} is required
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-template #normalField>
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">{{ key | uppercase }}: </label>
+        <div class="col-sm-10">
+          <input
+            pInputText
+            class="form-control"
+            [formControlName]="key"
+            [ngClass]="{ 'is-invalid': isControlInvalid(key) }"
+          />
+          <div *ngIf="isControlInvalid(key)" class="invalid-feedback">
+            {{ key | uppercase }} is required
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+  <div class="text-center">
+    <button pButton class="btn btn-primary" type="submit">Submit</button>
+  </div>
+</form> -->
+
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header">
+      <h3>Formulario Dinámico</h3>
+    </div>
+    <div class="card-body">
+      <form
+        *ngIf="true"
+        [formGroup]="form"
+        (ngSubmit)="onSubmit()"
+        class="container mt-4"
+      >
+        <div *ngFor="let key of objectKeys(jsonData)" class="mb-3">
+          <div *ngIf="isObject(jsonData[key]); else normalField" class="mb-3">
+            <h3 class="mb-3">{{ key | uppercase }}</h3>
+            <div
+              *ngFor="let subKey of objectKeys(jsonData[key])"
+              class="form-group row"
+            >
+              <label class="col-sm-2 col-form-label"
+                >{{ subKey | uppercase }}:
+              </label>
+              <div class="col-sm-10">
+                <input
+                  pInputText
+                  class="form-control"
+                  [formControlName]="key + '.' + subKey"
+                />
+              </div>
+            </div>
+          </div>
+          <ng-template #normalField>
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label"
+                >{{ key | uppercase }}:
+              </label>
+              <div class="col-sm-10">
+                <input
+                  pInputText
+                  class="form-control"
+                  [formControlName]="key"
+                />
+              </div>
+            </div>
+          </ng-template>
+        </div>
+        <div class="text-center">
+          <button pButton class="btn btn-primary" type="submit">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<hr />
+<form *ngIf="false" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div *ngFor="let key of objectKeys(jsonData)">
+    <div *ngIf="isObject(jsonData[key]); else normalField">
+      <h3>{{ key | uppercase }}</h3>
+      <div *ngFor="let subKey of objectKeys(jsonData[key])">
+        <label>{{ subKey | uppercase }}: </label>
+        <input pInputText [formControlName]="key + '.' + subKey" />
+      </div>
+    </div>
+    <ng-template #normalField>
+      <label>{{ key | uppercase }}: </label>
+      <input pInputText [formControlName]="key" />
+    </ng-template>
+  </div>
+  <button pButton type="submit" label="Submit"></button>
+</form>
+
+<div class="card" *ngIf="false">
+  <p-table responsiveLayout="scroll" [value]="products">
+    <ng-template pTemplate="caption"> Scroll </ng-template>
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Category</th>
+        <th>Quantity</th>
+        <th>Status</th>
+        <th>Reviews</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-product let-columns="columns">
+      <tr>
+        <td>{{ product.name }}</td>
+        <td>{{ product.price | currency : 'USD' }}</td>
+        <td>{{ product.category }}</td>
+        <td>{{ product.quantity }}</td>
+        <td>
+          <span
+            [class]="
+              'product-badge status-' +
+              (product.inventoryStatus
+                ? product.inventoryStatus.toLowerCase()
+                : '')
+            "
+            >{{ product.inventoryStatus }}</span
+          >
+        </td>
+        <td>
+          <p-rating
+            [ngModel]="product.rating"
+            [readonly]="true"
+            [cancel]="false"
+          ></p-rating>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<div class="card" *ngIf="false">
+  <p-table responsiveLayout="stack" [value]="products">
+    <ng-template pTemplate="caption"> Stack </ng-template>
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Category</th>
+        <th>Quantity</th>
+        <th>Status</th>
+        <th>Reviews</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-product let-columns="columns">
+      <tr>
+        <td><span class="p-column-title">Name</span>{{ product.name }}</td>
+        <td>
+          <span class="p-column-title">Price</span
+          >{{ product.price | currency : 'USD' }}
+        </td>
+        <td>
+          <span class="p-column-title">Category</span>{{ product.category }}
+        </td>
+        <td>
+          <span class="p-column-title">Quantity</span>{{ product.quantity }}
+        </td>
+        <td>
+          <span class="p-column-title">Status</span
+          ><span
+            [class]="
+              'product-badge status-' +
+              (product.inventoryStatus
+                ? product.inventoryStatus.toLowerCase()
+                : '')
+            "
+            >{{ product.inventoryStatus }}</span
+          >
+        </td>
+        <td>
+          <span class="p-column-title">Reviews</span>
+          <p-rating
+            [ngModel]="product.rating"
+            [readonly]="true"
+            [cancel]="false"
+          ></p-rating>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
